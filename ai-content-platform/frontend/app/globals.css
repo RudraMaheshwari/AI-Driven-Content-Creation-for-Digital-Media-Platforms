@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #fcfbf6;
+  color: #16181d;
+  min-height: 100%;
+}
+
+body {
+  font-feature-settings: "ss01", "kern";
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.deck {
+  @apply rounded-2xl border border-paper-200 bg-white shadow-[0_1px_0_#ece6d6,0_8px_24px_-12px_rgba(22,24,29,0.18)];
+}
+
+.deck-flat {
+  @apply rounded-2xl border border-paper-200 bg-paper-50;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply btn bg-ink-900 text-paper-50 hover:bg-ink-800 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-ghost {
+  @apply btn bg-paper-100 text-ink-800 hover:bg-paper-200 border border-paper-200;
+}
+
+.btn-accent {
+  @apply btn bg-accent-500 text-white hover:bg-accent-600 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.input,
+.textarea,
+.select {
+  @apply w-full rounded-xl bg-white border border-paper-200 px-3 py-2 text-sm text-ink-900 placeholder-ink-300 focus:outline-none focus:border-ink-900 focus:ring-1 focus:ring-ink-900;
+}
+
+.textarea {
+  @apply min-h-[120px] leading-relaxed font-serif text-base;
+}
+
+.label {
+  @apply block text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500 mb-1.5;
+}
+
+.eyebrow {
+  @apply inline-block text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-600;
+}
+
+.tag {
+  @apply inline-block rounded-full border border-paper-200 bg-paper-50 px-2.5 py-0.5 text-[11px] text-ink-700;
+}
+
+.tag-accent {
+  @apply tag border-accent-400 bg-accent-50 text-accent-700;
+}
+
+.divider {
+  @apply h-px w-full bg-paper-200;
+}
+
+.article-body {
+  @apply font-serif text-[17px] leading-[1.7] text-ink-800 whitespace-pre-wrap;
+}
+
+.article-body p + p {
+  margin-top: 0.9em;
+}

@@ -1,0 +1,9 @@
+{
+  "include": ["src", "app.py"],
+  "extraPaths": ["."],
+  "reportMissingImports": "none",
+  "reportMissingModuleSource": "none",
+  "reportUnusedFunction": "none",
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "off"
+}

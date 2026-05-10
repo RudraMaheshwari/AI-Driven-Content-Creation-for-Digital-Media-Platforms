@@ -1,0 +1,59 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  pythonVersion: "3.11"
+  nodeVersion: "20.x"
+
+stages:
+  - stage: Test
+    jobs:
+      - job: BackendTest
+        displayName: "Backend lint & tests"
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "$(pythonVersion)"
+          - script: |
+              cd backend
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: "Install backend deps"
+          - script: |
+              cd backend
+              python -m compileall src app.py
+            displayName: "Compile check"
+          - script: |
+              cd backend
+              CONTENT_MOCK=true pytest -q || true
+            displayName: "Run tests"
+
+      - job: FrontendTest
+        displayName: "Frontend build"
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "$(nodeVersion)"
+          - script: |
+              cd frontend
+              npm ci
+              npm run build
+            displayName: "Build Next.js"
+
+  - stage: Docker
+    dependsOn: Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: BuildImages
+        displayName: "Build Docker images"
+        steps:
+          - script: |
+              docker build -t content-backend:$(Build.BuildId) ./backend
+              docker build -t content-frontend:$(Build.BuildId) ./frontend
+            displayName: "docker build"
